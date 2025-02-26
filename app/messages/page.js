@@ -1,11 +1,10 @@
+import { unstable_noStore } from "next/cache";
+
 import Messages from "@/components/messages";
 
 export default async function MessagesPage() {
-  const response = await fetch("http://localhost:8080/messages", {
-    next: {
-      revalidate: 20,
-    },
-  });
+  unstable_noStore();
+  const response = await fetch("http://localhost:8080/messages");
   const messages = await response.json();
 
   if (!messages || messages.length === 0) {
